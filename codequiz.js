@@ -1,5 +1,15 @@
 var mainContainer = document.getElementById("main");
+var mainContainerAmount = document.getElementById("main").childElementCount;
 // Things needed for the quiz
+
+function removeAllChildren() {
+  var mainContainerAmount = document.getElementById("main").childElementCount;
+  for (var i = 0; i < mainContainerAmount; i++) {
+    mainContainer.removeChild(mainContainer.childNodes[0]);
+  }
+  mainContainer.removeChild(mainContainer.childNodes[0]);
+}
+
 welcomeScreen();
 
 // A start button & welcome screen
@@ -54,9 +64,15 @@ function welcomeFriend() {
   quizButton.setAttribute("id", "quiz-button");
   quizButton.setAttribute("class", "btn btn-primary");
   
-  p1.textContent = "Welcome back " + personalName + "! Let's get started on this quiz.";
+  p1.textContent = "Welcome " + personalName + "! Let's get started on this quiz.";
   quizButton.textContent = "Start Quiz"
 
+  document.getElementById("quiz-button").addEventListener("click", function() {
+
+    removeAllChildren();
+    countDown();
+    
+  });
 }
 
 function welcomeInputField() {
@@ -104,7 +120,7 @@ function nameFormForm() {
 
   nameForm.addEventListener("submit", function(event) {
     // event.preventDefault();
-    var nameText = nameInput.value
+    var nameText = nameInput.value;
     
     if (nameText === "") {
       return;
@@ -117,19 +133,41 @@ function nameFormForm() {
   });
 }
   
-function welcomeBack() {
-  // If they have played before from that same IP address
-  // Then greet them by saved name
-  // A button to begin the quiz appears
-}
-  
 // Timer that counts down
 function countDown() {
-  // when the button is pressed
-  // Initialize a countdown clock
-  // Counts down from 5 to 0
-  // Flashes BEGIN text
+
+  var time1 = document.createElement("div");
+  var timeRow1 = document.createElement("div");
+  var timeCol1 = document.createElement("div");
+  
+  mainContainer.appendChild(timeRow1);
+  timeRow1.appendChild(timeCol1);
+  timeCol1.appendChild(time1);
+
+  timeRow1.setAttribute("class", "row");
+  timeCol1.setAttribute("class", "col-md text-center");
+  
+  var secondsLeft = 6;
+    
+  var setTimer = setInterval(function() {
+      
+    secondsLeft--;
+      
+    time1.textContent = secondsLeft + " seconds remaining";
+      
+    // if the countdown reach 0
+    if(secondsLeft === 0) {
+      // stop the interval
+      clearInterval(setTimer);
+      removeAllChildren();
+      // Flashes BEGIN text
+      // call questions
+
+      }
+  }, 1000)
 }
+
+
 
 // Questions that appear open the screen
 function questionsAppear() {
