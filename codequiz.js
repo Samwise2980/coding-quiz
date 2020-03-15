@@ -78,12 +78,13 @@ function welcomeInputField() {
   form1.appendChild(inputLabel);
   form1.appendChild(input1);
 
-  inputContainer.setAttribute("class", "container");
+  inputContainer.setAttribute("class", "container text-center mt-3");
+  inputContainer.setAttribute("style", "width = 500px;")
+  inputContainer.setAttribute("style", "height = 500px;")
   divRow2.setAttribute("class", "row");
   divCol2.setAttribute("class", "col-md");
-  form1.setAttribute("method", "post");
   form1.setAttribute("id", "name-form")
-  p1.setAttribute("class", "text-center");
+  p1.setAttribute("class", "text-center mt-3");
   inputLabel.setAttribute("for", "name-input");
   input1.setAttribute("type", "text");
   input1.setAttribute("id", "name-input");
