@@ -1,21 +1,33 @@
+var timerDown = document.getElementById("timerDown");
 var mainContainer = document.getElementById("main");
+
+var totalCorrect = 0;
+var totalWrong = 0;
+
 var questions = [
   {
   question: "What is (2 + 3)?",
-  answer: 5
+  answer: [10, 5, 3, 7]
   },
   {
   question: "What is (5 + 5)?",
-  answer: 10
+  answer: [10, 11, 13, 9]
   },
   {
   question: "What is (1 + 1)?",
-  answer: 2
+  answer: [0, 3, 1, 2] 
   }
-  ];// Things needed for the quiz
+];
 
 function removeAllChildren() {
   document.getElementById("main").innerHTML = "";
+}
+
+function endQuiz() {
+  document.getElementById("main").innerHTML = "";
+  timerDown.innerHTML = "";
+  gameOver();
+
 }
 
 welcomeScreen();
@@ -72,7 +84,7 @@ function welcomeFriend() {
   quizButton.setAttribute("id", "quiz-button");
   quizButton.setAttribute("class", "btn btn-primary");
   
-  p1.textContent = "Welcome " + personalName + "! Let's get started on this quiz.";
+  p1.textContent = "Welcome " + personalName + "! Let's get started on this quiz. You'll have 60 seconds to try to answer 5 questions about Javascript";
   quizButton.textContent = "Start Quiz"
 
   document.getElementById("quiz-button").addEventListener("click", function() {
@@ -156,7 +168,7 @@ function countDown() {
   timeCol1.setAttribute("class", "col-md text-center");
   time1.setAttribute("style", "font-size: 30px");
   
-  var secondsLeft = 6;
+  var secondsLeft = 4;
     
   var setTimer = setInterval(function() {
       
@@ -164,29 +176,139 @@ function countDown() {
       
     time1.textContent = secondsLeft;
       
+    if(secondsLeft === 0) {
+      clearInterval(setTimer);
+      removeAllChildren();
+      questionTimer();
+      question1();
+    } 
+  }, 1000)
+}
+
+function questionTimer() {
+
+  var questionTimerContainer = document.createElement("div");
+  var questionTime = document.createElement("div");
+  var questionTimeRow = document.createElement("div");
+  var questionTimeCol = document.createElement("div");
+  
+  timerDown.appendChild(questionTimerContainer);
+  questionTimerContainer.appendChild(questionTimeRow);
+  questionTimeRow.appendChild(questionTimeCol);
+  questionTimeCol.appendChild(questionTime);
+
+  questionTimeRow.setAttribute("class", "row");
+  questionTimeCol.setAttribute("class", "col-md text-center");
+  questionTime.setAttribute("style", "font-size: 30px");
+  
+  var secondsLeft = 60;
+    
+  var setTimer = setInterval(function() {
+      
+    secondsLeft--;
+      
+    questionTime.textContent = secondsLeft;
+      
     // if the countdown reach 0
     if(secondsLeft === 0) {
       // stop the interval
       clearInterval(setTimer);
       removeAllChildren();
+      timerDown.innerHTML = "";
+
       // Flashes BEGIN text
       // call questions
-      questionAppear();
+      gameOver();
+
     } 
   }, 1000)
 }
 
-// Questions that appear open the screen
+function question1(){
+
+  questionFormat("Question 1", 0);
+  questionChecker1();
+
+}
+
+function question2(){
+
+  questionFormat("Question 2", 1);
+  questionChecker2();
+
+}
+
+function question3(){
+
+  questionFormat("Question 3", 2);
+  questionChecker3();
+  endQuiz();
+
+}
+
+function questionChecker1() {  
+  var radio1 = document.getElementById("answerRadio1");
+  var radio2 = document.getElementById("answerRadio2");
+  var radio3 = document.getElementById("answerRadio3");
+  var radio4 = document.getElementById("answerRadio4");
+  var subButton = document.getElementById("submit-button");
   
-// Question checker
-function questionChecker() {  
-  // Checks to see if they got the right answer
-  // IF they did
-  // Then give them 10 points
-  // Displays a big green check
-  // Else
-  // Red X on the screen
-  // decreases time from each question wrong.
+  subButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (radio2.checked === true) {
+      totalCorrect++;
+      removeAllChildren();
+      question2();
+    } else {
+      totalWrong++;
+      removeAllChildren();
+      question2();
+
+    }
+  });
+}
+
+function questionChecker2() {  
+  var radio1 = document.getElementById("answerRadio1");
+  var radio2 = document.getElementById("answerRadio2");
+  var radio3 = document.getElementById("answerRadio3");
+  var radio4 = document.getElementById("answerRadio4");
+  var subButton = document.getElementById("submit-button");
+    
+  subButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (radio1.checked === true) {
+      totalCorrect++;
+      removeAllChildren();
+      question3();
+    } else {
+      totalWrong++;
+      removeAllChildren();
+      question3();
+
+    }
+  });
+}
+
+function questionChecker3() {  
+  var radio1 = document.getElementById("answerRadio1");
+  var radio2 = document.getElementById("answerRadio2");
+  var radio3 = document.getElementById("answerRadio3");
+  var radio4 = document.getElementById("answerRadio4");
+  var subButton = document.getElementById("submit-button");
+      
+  subButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (radio4.checked === true) {
+      totalCorrect++;
+      removeAllChildren();
+    
+    } else {
+      totalWrong++;
+      removeAllChildren();
+
+    }
+  });
 }
   
 // Game over screen
@@ -212,14 +334,14 @@ function tryAgain() {
   // Refreshes the page to start over again
 }
 
-function questionAppear() {
-
+function questionFormat(questionTitleText, questionNumber) {
   var divTitleRow = document.createElement("div");
   var divTitleCol = document.createElement("div");
   var divHRRow = document.createElement("div");
   var divHRCol = document.createElement("div");
   var divAnswerRow = document.createElement("div");
   var divAnswerCol = document.createElement("div");
+  var correctWrongRow = document.createElement("div");
   var formCheck1 = document.createElement("div");
   var formCheck2 = document.createElement("div");
   var formCheck3 = document.createElement("div");
@@ -229,6 +351,8 @@ function questionAppear() {
 
   var questionTitle = document.createElement("h2");
   var p1 = document.createElement("p");
+  var p2 = document.createElement("p");
+  var p3 = document.createElement("p");
   var hr1 = document.createElement("hr");
   var formLabel1 = document.createElement("label");
   var radioForm1 = document.createElement("input");
@@ -240,6 +364,9 @@ function questionAppear() {
   var radioForm4 = document.createElement("input");
   var submitButton = document.createElement("button");
 
+  mainContainer.appendChild(correctWrongRow);
+  correctWrongRow.appendChild(p2);
+  correctWrongRow.appendChild(p3);
   mainContainer.appendChild(divTitleRow);
   divTitleRow.appendChild(divTitleCol);
   divTitleCol.appendChild(questionTitle);
@@ -249,13 +376,18 @@ function questionAppear() {
   divHRRow.appendChild(divHRCol);
   divHRCol.appendChild(hr1);
 
+  correctWrongRow.setAttribute("class", "row");
+  p2.setAttribute("class", "mr-3");
   divTitleRow.setAttribute("class", "row");
   buttonRow.setAttribute("class", "row");
   divTitleCol.setAttribute("class", "col-md");
   buttonCol.setAttribute("class", "col-md");
 
-  questionTitle.textContent = "Question 1";
-  p1.textContent = questions[0].question;
+
+  p2.textContent = "Correct " + totalCorrect;
+  p3.textContent = "Wrong " + totalWrong;
+  questionTitle.textContent = questionTitleText;
+  p1.textContent = questions[questionNumber].question;
 
   mainContainer.appendChild(divAnswerRow);
   mainContainer.appendChild(buttonRow);
@@ -287,37 +419,37 @@ function questionAppear() {
   radioForm1.setAttribute("type", "radio");
   radioForm1.setAttribute("name", "answer1");
   radioForm1.setAttribute("id", "answerRadio1");
-  radioForm1.setAttribute("value", "option2");
+  radioForm1.setAttribute("value", questions[questionNumber].answer[0]);
   formLabel1.setAttribute("class", "form-check-label");
   formLabel1.setAttribute("for", "answerRadio1");
-  formLabel1.textContent = questions[0].answer;
+  formLabel1.textContent = questions[questionNumber].answer[0];
 
   radioForm2.setAttribute("type", "radio");
   radioForm2.setAttribute("name", "answer1");
-  radioForm2.setAttribute("id", "answerRadio1");
+  radioForm2.setAttribute("id", "answerRadio2");
   radioForm2.setAttribute("class", "form-check-input");
-  radioForm2.setAttribute("value", "option2");
+  radioForm2.setAttribute("value", questions[questionNumber].answer[1]);
   formLabel2.setAttribute("class", "form-check-label");
-  formLabel2.setAttribute("for", "answerRadio1");
-  formLabel2.textContent = questions[0].answer;
+  formLabel2.setAttribute("for", "answerRadio2");
+  formLabel2.textContent = questions[questionNumber].answer[1];
 
   radioForm3.setAttribute("class", "form-check-input");
   radioForm3.setAttribute("type", "radio");
   radioForm3.setAttribute("name", "answer1");
-  radioForm3.setAttribute("id", "answerRadio1");
-  radioForm3.setAttribute("value", "option2");
+  radioForm3.setAttribute("id", "answerRadio3");
+  radioForm3.setAttribute("value", questions[questionNumber].answer[2]);
   formLabel3.setAttribute("class", "form-check-label");
-  formLabel3.setAttribute("for", "answerRadio1");
-  formLabel3.textContent = questions[0].answer;
+  formLabel3.setAttribute("for", "answerRadio3");
+  formLabel3.textContent = questions[questionNumber].answer[2];
 
   radioForm4.setAttribute("class", "form-check-input");
   radioForm4.setAttribute("type", "radio");
   radioForm4.setAttribute("name", "answer1");
-  radioForm4.setAttribute("id", "answerRadio1");
-  radioForm4.setAttribute("value", "option2");
+  radioForm4.setAttribute("id", "answerRadio4");
+  radioForm4.setAttribute("value", questions[questionNumber].answer[3]);
   formLabel4.setAttribute("class", "form-check-label");
-  formLabel4.setAttribute("for", "answerRadio1");
-  formLabel4.textContent = questions[0].answer;
+  formLabel4.setAttribute("for", "answerRadio4");
+  formLabel4.textContent = questions[questionNumber].answer[3];
 
   submitButton.setAttribute("id", "submit-button");
   submitButton.setAttribute("class", "btn btn-primary mt-3");
