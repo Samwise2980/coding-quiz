@@ -171,57 +171,12 @@ function countDown() {
       removeAllChildren();
       // Flashes BEGIN text
       // call questions
-      questionsAppear();
+      questionAppear();
     } 
   }, 1000)
 }
 
 // Questions that appear open the screen
-function questionsAppear() {
-  var divTitleRow = document.createElement("div");
-  var divTitleCol = document.createElement("div");
-  var divHRRow = document.createElement("div");
-  var divHRCol = document.createElement("div");
-  var divAnswerRow = document.createElement("div");
-  var divAnswerCol = document.createElement("div");
-
-  var questionTitle = document.createElement("h2");
-  var p1 = document.createElement("p");
-  var hr1 = document.createElement("hr");
-  var formLabel1 = document.createElement("label");
-  var radioForm1 = document.createElement("form");
-
-  
-  mainContainer.appendChild(divTitleRow);
-  divTitleRow.appendChild(divTitleCol);
-  divTitleCol.appendChild(questionTitle);
-  divTitleCol.appendChild(p1);
-
-  mainContainer.appendChild(divHRRow);
-  divHRRow.appendChild(divHRCol);
-  divHRCol.appendChild(hr1);
-
-  divTitleRow.setAttribute("class", "row");
-  divTitleCol.setAttribute("class", "col-md");
-  questionTitle.textContent = "Question 1";
-  p1.textContent = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, beatae! Odio, vitae vero. Mollitia inventore ab eum velit, assumenda unde corrupti error cum quaerat beatae, sit ipsum adipisci commodi quia nulla? Rerum officia eos ad voluptates, maiores quaerat saepe iusto nemo optio vero eveniet possimus, labore aliquid, dolorem facilis sunt.";
-
-
-
-  // div class="form-check">
-  //         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-  //         <label class="form-check-label" for="exampleRadios2">
-  //           Second default radio
-  //         </label>
-  //       </div>
-
-
-  // 5 questions apear one after the other
-  // Multiple choice answers appear
-  // Reasearch Radio
-  // Let the user click one
-  // Submit button to move on to the next question
-}
   
 // Question checker
 function questionChecker() {  
@@ -255,4 +210,122 @@ function scoreScreen() {
 function tryAgain() {
   // A try agian button appears at the bottom of the screen
   // Refreshes the page to start over again
+}
+
+function questionAppear() {
+
+  var divTitleRow = document.createElement("div");
+  var divTitleCol = document.createElement("div");
+  var divHRRow = document.createElement("div");
+  var divHRCol = document.createElement("div");
+  var divAnswerRow = document.createElement("div");
+  var divAnswerCol = document.createElement("div");
+  var formCheck1 = document.createElement("div");
+  var formCheck2 = document.createElement("div");
+  var formCheck3 = document.createElement("div");
+  var formCheck4 = document.createElement("div");
+  var buttonRow = document.createElement("div");
+  var buttonCol = document.createElement("div");
+
+  var questionTitle = document.createElement("h2");
+  var p1 = document.createElement("p");
+  var hr1 = document.createElement("hr");
+  var formLabel1 = document.createElement("label");
+  var radioForm1 = document.createElement("input");
+  var formLabel2 = document.createElement("label");
+  var radioForm2 = document.createElement("input");
+  var formLabel3 = document.createElement("label");
+  var radioForm3 = document.createElement("input");
+  var formLabel4 = document.createElement("label");
+  var radioForm4 = document.createElement("input");
+  var submitButton = document.createElement("button");
+
+  mainContainer.appendChild(divTitleRow);
+  divTitleRow.appendChild(divTitleCol);
+  divTitleCol.appendChild(questionTitle);
+  divTitleCol.appendChild(p1);
+
+  mainContainer.appendChild(divHRRow);
+  divHRRow.appendChild(divHRCol);
+  divHRCol.appendChild(hr1);
+
+  divTitleRow.setAttribute("class", "row");
+  buttonRow.setAttribute("class", "row");
+  divTitleCol.setAttribute("class", "col-md");
+  buttonCol.setAttribute("class", "col-md");
+
+  questionTitle.textContent = "Question 1";
+  p1.textContent = questions[0].question;
+
+  mainContainer.appendChild(divAnswerRow);
+  mainContainer.appendChild(buttonRow);
+  buttonRow.appendChild(buttonCol);
+  divAnswerRow.appendChild(divAnswerCol);
+  divAnswerCol.appendChild(formCheck1);
+  divAnswerCol.appendChild(formCheck2);
+  divAnswerCol.appendChild(formCheck3);
+  divAnswerCol.appendChild(formCheck4);
+  buttonCol.appendChild(submitButton);
+
+  formCheck1.appendChild(radioForm1);
+  formCheck1.appendChild(formLabel1);
+  formCheck2.appendChild(radioForm2);
+  formCheck2.appendChild(formLabel2);
+  formCheck3.appendChild(radioForm3);
+  formCheck3.appendChild(formLabel3);
+  formCheck4.appendChild(radioForm4);
+  formCheck4.appendChild(formLabel4);
+
+  formCheck1.setAttribute("class", "form-check");
+  formCheck2.setAttribute("class", "form-check");
+  formCheck3.setAttribute("class", "form-check");
+  formCheck4.setAttribute("class", "form-check");
+
+  divAnswerRow.setAttribute("class", "row");
+  divAnswerCol.setAttribute("class", "col-md");
+  radioForm1.setAttribute("class", "form-check-input");
+  radioForm1.setAttribute("type", "radio");
+  radioForm1.setAttribute("name", "answer1");
+  radioForm1.setAttribute("id", "answerRadio1");
+  radioForm1.setAttribute("value", "option2");
+  formLabel1.setAttribute("class", "form-check-label");
+  formLabel1.setAttribute("for", "answerRadio1");
+  formLabel1.textContent = questions[0].answer;
+
+  radioForm2.setAttribute("type", "radio");
+  radioForm2.setAttribute("name", "answer1");
+  radioForm2.setAttribute("id", "answerRadio1");
+  radioForm2.setAttribute("class", "form-check-input");
+  radioForm2.setAttribute("value", "option2");
+  formLabel2.setAttribute("class", "form-check-label");
+  formLabel2.setAttribute("for", "answerRadio1");
+  formLabel2.textContent = questions[0].answer;
+
+  radioForm3.setAttribute("class", "form-check-input");
+  radioForm3.setAttribute("type", "radio");
+  radioForm3.setAttribute("name", "answer1");
+  radioForm3.setAttribute("id", "answerRadio1");
+  radioForm3.setAttribute("value", "option2");
+  formLabel3.setAttribute("class", "form-check-label");
+  formLabel3.setAttribute("for", "answerRadio1");
+  formLabel3.textContent = questions[0].answer;
+
+  radioForm4.setAttribute("class", "form-check-input");
+  radioForm4.setAttribute("type", "radio");
+  radioForm4.setAttribute("name", "answer1");
+  radioForm4.setAttribute("id", "answerRadio1");
+  radioForm4.setAttribute("value", "option2");
+  formLabel4.setAttribute("class", "form-check-label");
+  formLabel4.setAttribute("for", "answerRadio1");
+  formLabel4.textContent = questions[0].answer;
+
+  submitButton.setAttribute("id", "submit-button");
+  submitButton.setAttribute("class", "btn btn-primary mt-3");
+  submitButton.textContent = "Submit";
+
+  // 5 questions apear one after the other
+  // Multiple choice answers appear
+  // Reasearch Radio
+  // Let the user click one
+  // Submit button to move on to the next question
 }
