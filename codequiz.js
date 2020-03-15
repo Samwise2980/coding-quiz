@@ -20,12 +20,33 @@ function welcomeScreen() {
   welcome.setAttribute("class", "text-center")
   welcome.textContent = "Welcome, to the Coding Quiz!";
  // Add If statement
- 
+
   if (localStorage.key("personalName") === null) {
     welcomeInputField()
   } else {
-    //welcomeFriend();
+    welcomeFriend();
   }
+}
+
+function welcomeFriend() {
+
+  var divRow2 = document.createElement("div");
+  var divCol2 = document.createElement("div");
+  var p1 = document.createElement("p");
+  var personalName = localStorage.getItem("personalName")
+
+  mainContainer.appendChild(divRow2);
+  divRow2.appendChild(divCol2);
+  divCol2.appendChild(p1);
+
+  divRow2.setAttribute("class", "row");
+  divCol2.setAttribute("class", "col-md");
+  p1.setAttribute("class", "text-center");
+
+  // User is prompted to input a name
+  p1.textContent = "Welcome back " + personalName + "! Let's get started on this quiz.";
+
+
 }
 
 function welcomeInputField() {
