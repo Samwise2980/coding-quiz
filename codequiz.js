@@ -1,5 +1,18 @@
 var mainContainer = document.getElementById("main");
-// Things needed for the quiz
+var questions = [
+  {
+  question: "What is (2 + 3)?",
+  answer: 5
+  },
+  {
+  question: "What is (5 + 5)?",
+  answer: 10
+  },
+  {
+  question: "What is (1 + 1)?",
+  answer: 2
+  }
+  ];// Things needed for the quiz
 
 function removeAllChildren() {
   document.getElementById("main").innerHTML = "";
@@ -158,13 +171,51 @@ function countDown() {
       removeAllChildren();
       // Flashes BEGIN text
       // call questions
-
-      }
+      questionsAppear();
+    } 
   }, 1000)
 }
 
 // Questions that appear open the screen
 function questionsAppear() {
+  var divTitleRow = document.createElement("div");
+  var divTitleCol = document.createElement("div");
+  var divHRRow = document.createElement("div");
+  var divHRCol = document.createElement("div");
+  var divAnswerRow = document.createElement("div");
+  var divAnswerCol = document.createElement("div");
+
+  var questionTitle = document.createElement("h2");
+  var p1 = document.createElement("p");
+  var hr1 = document.createElement("hr");
+  var formLabel1 = document.createElement("label");
+  var radioForm1 = document.createElement("form");
+
+  
+  mainContainer.appendChild(divTitleRow);
+  divTitleRow.appendChild(divTitleCol);
+  divTitleCol.appendChild(questionTitle);
+  divTitleCol.appendChild(p1);
+
+  mainContainer.appendChild(divHRRow);
+  divHRRow.appendChild(divHRCol);
+  divHRCol.appendChild(hr1);
+
+  divTitleRow.setAttribute("class", "row");
+  divTitleCol.setAttribute("class", "col-md");
+  questionTitle.textContent = "Question 1";
+  p1.textContent = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, beatae! Odio, vitae vero. Mollitia inventore ab eum velit, assumenda unde corrupti error cum quaerat beatae, sit ipsum adipisci commodi quia nulla? Rerum officia eos ad voluptates, maiores quaerat saepe iusto nemo optio vero eveniet possimus, labore aliquid, dolorem facilis sunt.";
+
+
+
+  // div class="form-check">
+  //         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  //         <label class="form-check-label" for="exampleRadios2">
+  //           Second default radio
+  //         </label>
+  //       </div>
+
+
   // 5 questions apear one after the other
   // Multiple choice answers appear
   // Reasearch Radio
