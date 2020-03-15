@@ -4,20 +4,14 @@ welcomeScreen();
 
 // A start button & welcome screen
 function welcomeScreen() {
-  // When the page loads
-  // The user is welcomed
+  // The user is welcomed to the page
   var divRow1 = document.createElement("div");
-  var divRow2 = document.createElement("div");
   var divCol1 = document.createElement("div");
-  var divCol2 = document.createElement("div");
   var welcome = document.createElement("h2");
-  var p1 = document.createElement("p");
 
   divRow1.setAttribute("class", "row");
-  divRow2.setAttribute("class", "row");
 
   divCol1.setAttribute("class", "col-md");
-  divCol2.setAttribute("class", "col-md");
 
   mainContainer.appendChild(divRow1);
   divRow1.appendChild(divCol1);
@@ -25,49 +19,72 @@ function welcomeScreen() {
   divCol1.appendChild(welcome);
   welcome.setAttribute("class", "text-center")
   welcome.textContent = "Welcome, to the Coding Quiz!";
+ // Add If statement
+ 
+  if (localStorage.key("personalName") === null) {
+    welcomeInputField()
+  } else {
+    //welcomeFriend();
+  }
+}
 
-  // User is prompted to input a name
+function welcomeInputField() {
+  // Dynamically Created Input Field
+  var inputContainer = document.createElement("div");
+  var divRow2 = document.createElement("div");
+  var divCol2 = document.createElement("div");
+  var form1 = document.createElement("form");
+  var p1 = document.createElement("p");
+  var inputLabel = document.createElement("label");
+  var input1 = document.createElement("input");
+
   mainContainer.appendChild(divRow2);
   divRow2.appendChild(divCol2);
   divCol2.appendChild(p1);
 
-  p1.setAttribute("class", "text-center")
-  p1.textContent = "We would like to know you name for us to personaly greet you when you come back to this quiz."
-
-  welcomeInputField();
-}
-
-function welcomeInputField() {
-  var inputContainer = document.createElement("div");
-  var divRow3 = document.createElement("div");
-  var divRow4 = document.createElement("div");
-  var divCol3 = document.createElement("div");
-  var divCol4 = document.createElement("div");
-  var inputLabel = document.createElement("label");
-  var input1 = document.createElement("input");
-
   mainContainer.appendChild(inputContainer);
-  inputContainer.appendChild(divRow3);
-  inputContainer.appendChild(divRow4);
-  divRow3.appendChild(divCol3);
-  divRow4.appendChild(divCol4);
-  divCol3.appendChild(inputLabel);
-  divCol4.appendChild(input1);
+  inputContainer.appendChild(form1);
+  form1.appendChild(inputLabel);
+  form1.appendChild(input1);
 
-  inputContainer.setAttribute("class", "container")
-  divRow3.setAttribute("class", "row text-left");
-  divRow4.setAttribute("class", "row text-left");
-  divCol3.setAttribute("class", "col-md");
-  divCol4.setAttribute("class", "col-md");
-
-
-  inputLabel.setAttribute("for", "name");
-  inputLabel.textContent = "Enter Name:"
+  inputContainer.setAttribute("class", "container");
+  divRow2.setAttribute("class", "row");
+  divCol2.setAttribute("class", "col-md");
+  form1.setAttribute("method", "post");
+  form1.setAttribute("id", "name-form")
+  p1.setAttribute("class", "text-center");
+  inputLabel.setAttribute("for", "name-input");
   input1.setAttribute("type", "text");
-  input1.setAttribute("id", "name");
-  input1.setAttribute("name", "name");
+  input1.setAttribute("id", "name-input");
+  input1.setAttribute("name", "name-input");
+  input1.setAttribute("placeholder", "John Doe");
+
+  // User is prompted to input a name
+  p1.textContent = "We would like to know you name for us to personaly greet you when you come back to this quiz.";
+  inputLabel.textContent = "Enter Name:";
+  nameFormForm();
 }
 
+// When form is submitted...
+function nameFormForm() {
+  var nameInput = document.querySelector("#name-input");
+  var nameForm = document.querySelector("#name-form");
+
+  nameForm.addEventListener("submit", function(event) {
+    // event.preventDefault();
+    var nameText = nameInput.value
+    
+    if (nameText === "") {
+      return;
+    }
+    
+    nameInput.value = "";
+    
+    localStorage.setItem("personalName", nameText);
+
+  });
+}
+  
 function welcomeBack() {
   // If they have played before from that same IP address
   // Then greet them by saved name
