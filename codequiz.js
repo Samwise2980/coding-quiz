@@ -1,13 +1,8 @@
 var mainContainer = document.getElementById("main");
-var mainContainerAmount = document.getElementById("main").childElementCount;
 // Things needed for the quiz
 
 function removeAllChildren() {
-  var mainContainerAmount = document.getElementById("main").childElementCount;
-  for (var i = 0; i < mainContainerAmount; i++) {
-    mainContainer.removeChild(mainContainer.childNodes[0]);
-  }
-  mainContainer.removeChild(mainContainer.childNodes[0]);
+  document.getElementById("main").innerHTML = "";
 }
 
 welcomeScreen();
@@ -146,6 +141,7 @@ function countDown() {
 
   timeRow1.setAttribute("class", "row");
   timeCol1.setAttribute("class", "col-md text-center");
+  time1.setAttribute("style", "font-size: 30px");
   
   var secondsLeft = 6;
     
@@ -153,7 +149,7 @@ function countDown() {
       
     secondsLeft--;
       
-    time1.textContent = secondsLeft + " seconds remaining";
+    time1.textContent = secondsLeft;
       
     // if the countdown reach 0
     if(secondsLeft === 0) {
@@ -166,8 +162,6 @@ function countDown() {
       }
   }, 1000)
 }
-
-
 
 // Questions that appear open the screen
 function questionsAppear() {
