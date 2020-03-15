@@ -31,21 +31,31 @@ function welcomeScreen() {
 function welcomeFriend() {
 
   var divRow2 = document.createElement("div");
+  var divRow3 = document.createElement("div");
   var divCol2 = document.createElement("div");
+  var divCol3 = document.createElement("div");
   var p1 = document.createElement("p");
-  var personalName = localStorage.getItem("personalName")
+  var quizButton = document.createElement("button");
+  var personalName = localStorage.getItem("personalName");
 
   mainContainer.appendChild(divRow2);
+  mainContainer.appendChild(divRow3);
   divRow2.appendChild(divCol2);
+  divRow3.appendChild(divCol3);
   divCol2.appendChild(p1);
+  divCol3.appendChild(quizButton);
 
-  divRow2.setAttribute("class", "row");
+  divRow2.setAttribute("class", "row mt-5");
   divCol2.setAttribute("class", "col-md");
+  divRow3.setAttribute("class", "row mt-3");
+  divCol3.setAttribute("class", "col-md text-center");
+
   p1.setAttribute("class", "text-center");
-
-  // User is prompted to input a name
+  quizButton.setAttribute("id", "quiz-button");
+  quizButton.setAttribute("class", "btn btn-primary");
+  
   p1.textContent = "Welcome back " + personalName + "! Let's get started on this quiz.";
-
+  quizButton.textContent = "Start Quiz"
 
 }
 
