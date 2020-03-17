@@ -1,5 +1,6 @@
 var timerDown = document.getElementById("timerDown");
 var mainContainer = document.getElementById("main");
+var secondsLeft = 60;
 
 var totalCorrect = 0;
 var totalWrong = 0;
@@ -168,15 +169,15 @@ function countDown() {
   timeCol1.setAttribute("class", "col-md text-center");
   time1.setAttribute("style", "font-size: 30px");
   
-  var secondsLeft = 4;
+  var countLeft = 4;
     
   var setTimer = setInterval(function() {
       
-    secondsLeft--;
+    countLeft--;
       
-    time1.textContent = secondsLeft;
+    time1.textContent = countLeft;
       
-    if(secondsLeft === 0) {
+    if(countLeft === 0) {
       clearInterval(setTimer);
       removeAllChildren();
       questionTimer();
@@ -208,16 +209,15 @@ function questionTimer() {
     secondsLeft--;
       
     questionTime.textContent = secondsLeft;
-      
-    // if the countdown reach 0
-    if(secondsLeft === 0) {
-      // stop the interval
+
+    // if (totalWrong === ) {
+    //   secondsLeft - 10;
+    // }
+
+    if (secondsLeft === 0) {
       clearInterval(setTimer);
       removeAllChildren();
       timerDown.innerHTML = "";
-
-      // Flashes BEGIN text
-      // call questions
       gameOver();
 
     } 
@@ -242,8 +242,6 @@ function question3(){
 
   questionFormat("Question 3", 2);
   questionChecker3();
-  endQuiz();
-
 }
 
 function questionChecker1() {  
@@ -302,38 +300,22 @@ function questionChecker3() {
     if (radio4.checked === true) {
       totalCorrect++;
       removeAllChildren();
+      endQuiz();
     
     } else {
       totalWrong++;
       removeAllChildren();
-
+      endQuiz();
     }
   });
 }
   
-// Game over screen
+// Score screen to store the initials.
 function gameOver() {   
-  // After time is up
-  // Or all questions answered
-  // Display Game Over
-  // Display right answer total
-  // Display wrong answer total
-  // Display total points
-}
-  
-// a score screen with input field to store user scores
-function scoreScreen() {
-  // Score screen appears
-  // Prompts the user to input initials
-  // Places them on the board according to their score
+
 }
 
-// Try again button
-function tryAgain() {
-  // A try agian button appears at the bottom of the screen
-  // Refreshes the page to start over again
-}
-
+// Question format for when each question is called.
 function questionFormat(questionTitleText, questionNumber) {
   var divTitleRow = document.createElement("div");
   var divTitleCol = document.createElement("div");
@@ -454,10 +436,4 @@ function questionFormat(questionTitleText, questionNumber) {
   submitButton.setAttribute("id", "submit-button");
   submitButton.setAttribute("class", "btn btn-primary mt-3");
   submitButton.textContent = "Submit";
-
-  // 5 questions apear one after the other
-  // Multiple choice answers appear
-  // Reasearch Radio
-  // Let the user click one
-  // Submit button to move on to the next question
 }
