@@ -20,11 +20,11 @@ var questions = [
   }
 ];
 
-var totalScore = totalCorrect * 27;
-var oldScores = [SON.parse(localStorage.getItem("gameScore"))];
-var oldNames = [JSON.parse(localStorage.getItem("nameInitial"))];
-console.log(oldNames);
-console.log(oldScores);
+var retrievedScoreData = localStorage.getItem("gameScore");
+var retrievedNameData = localStorage.getItem("nameInitial");
+
+var oldScores = JSON.parse(retrievedScoreData);
+var oldNames = JSON.parse(retrievedNameData);
 
 
 
@@ -40,6 +40,7 @@ function removeAllChildren() {
 function endQuiz() {
   document.getElementById("main").innerHTML = "";
   timerDown.innerHTML = "";
+  clearInterval();
   gameOver();
 
 }
@@ -64,6 +65,9 @@ function welcomeScreen() {
   welcome.setAttribute("class", "text-center")
   welcome.textContent = "Welcome, to the Coding Quiz!";
  // Add If statement
+
+  localStorage.getItem("gameScore");
+  localStorage.getItem("nameInitial");
 
   if (localStorage.key("personalName") === null) {
     welcomeInputField()
@@ -155,6 +159,14 @@ function welcomeInputField() {
   input1.setAttribute("name", "name-input");
   input1.setAttribute("placeholder", "John Doe");
 
+  if (localStorage.key("gameScore") === null || localStorage.key("nameInitial") === null){
+    var namesStart = ["Initials"]
+    var scoreStart = ["Scores"]
+    localStorage.setItem("nameInitial", JSON.stringify(namesStart));
+    localStorage.setItem("gameScore", JSON.stringify(scoreStart));
+  }
+
+
   // User is prompted to input a name
   p1.textContent = "We would like to know you name for us to personaly greet you when you come back to this quiz.";
   inputLabel.textContent = "Enter Name:";
@@ -198,14 +210,14 @@ function countDown() {
   
   var countLeft = 4;
     
-  var setTimer = setInterval(function() {
+  var setCountTimer = setInterval(function() {
       
     countLeft--;
       
     time1.textContent = countLeft;
       
     if(countLeft === 0) {
-      clearInterval(setTimer);
+      clearInterval(setCountTimer);
       removeAllChildren();
       questionTimer();
       question1();
@@ -228,7 +240,7 @@ function questionTimer() {
   questionTimeRow.setAttribute("class", "row");
   questionTimeCol.setAttribute("class", "col-md text-center");
   questionTime.setAttribute("style", "font-size: 30px");
-  
+ 
   var secondsLeft = 60;
     
   var setTimer = setInterval(function() {
@@ -247,7 +259,7 @@ function questionTimer() {
       timerDown.innerHTML = "";
       gameOver();
 
-    } 
+    }
   }, 1000)
 }
 
@@ -380,6 +392,7 @@ function gameOver() {
       return;
     }
     nameInput.value = "";
+    var totalScore = totalCorrect * 27;
     oldNames.push(nameText);
     oldScores.push(totalScore);
     localStorage.setItem("nameInitial", JSON.stringify(oldNames));
@@ -402,15 +415,34 @@ function scoreScreen() {
   h2ScoreTitle.setAttribute("class", "h2");
   h2ScoreCol.setAttribute("class", "col-md text-center");
 
-  h2ScoreTitle.textContent = "Scores!";
+  h2ScoreTitle.textContent = "Leaderboard!";
 
   mainContainer.appendChild(scoreContainer);
   scoreContainer.appendChild(h2ScoreRow);
   h2ScoreRow.appendChild(h2ScoreCol);
   h2ScoreCol.appendChild(h2ScoreTitle);
 
-  for (i = 1; i < oldNames.length; i++) {
-    
+  for (i = 0; i < oldNames.length; i++) {
+    var scoreRow = document.createElement("div");
+    var scoreCol = document.createElement("div");
+    var scoreNameCol = document.createElement("div");
+    var scoreName = document.createElement("p");
+    var scoreP = document.createElement("p");
+
+    scoreRow.setAttribute("class", "row");
+    scoreCol.setAttribute("class", "col-sm-6 text-center");
+    scoreNameCol.setAttribute("class", "col-sm-6 text-center");
+
+
+    scoreContainer.appendChild(scoreRow);
+    scoreRow.appendChild(scoreNameCol);
+    scoreRow.appendChild(scoreCol);
+
+    scoreNameCol.appendChild(scoreName);
+    scoreCol.appendChild(scoreP);
+
+    scoreName.textContent = oldNames[i];
+    scoreP.textContent = oldScores[i];
   }
 
 }
