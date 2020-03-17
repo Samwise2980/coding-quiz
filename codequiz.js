@@ -21,8 +21,12 @@ var questions = [
 ];
 
 var totalScore = totalCorrect * 27;
+var oldScores = [SON.parse(localStorage.getItem("gameScore"))];
+var oldNames = [JSON.parse(localStorage.getItem("nameInitial"))];
+console.log(oldNames);
+console.log(oldScores);
 
-var 
+
 
 function getInitials() {
   localStorage.getItem("nameInitial")
@@ -372,23 +376,42 @@ function gameOver() {
   document.getElementById("game-over-button").addEventListener("click", function(event) {
     // event.preventDefault();
     var nameText = nameInput.value;
-    var InitialInput = [localStorage.getItem("nameInitial")];
-    var newInitialInput = InitialInput.push(nameText);
     if (nameText === "") {
       return;
     }
-    alert("Im herer");
     nameInput.value = "";
-    
-    localStorage.setItem("nameInitial", newInitialInput);
+    oldNames.push(nameText);
+    oldScores.push(totalScore);
+    localStorage.setItem("nameInitial", JSON.stringify(oldNames));
+    localStorage.setItem("gameScore", JSON.stringify(oldScores));
+
     removeAllChildren();
+
     scoreScreen();
   });
 }
 
 function scoreScreen() {
+  var scoreContainer = document.createElement("div");
+  var h2ScoreTitle = document.createElement("h2");
+  var h2ScoreRow = document.createElement("div");
+  var h2ScoreCol = document.createElement("div");
 
+  scoreContainer.setAttribute("class", "container");
+  h2ScoreRow.setAttribute("class", "row");
+  h2ScoreTitle.setAttribute("class", "h2");
+  h2ScoreCol.setAttribute("class", "col-md text-center");
 
+  h2ScoreTitle.textContent = "Scores!";
+
+  mainContainer.appendChild(scoreContainer);
+  scoreContainer.appendChild(h2ScoreRow);
+  h2ScoreRow.appendChild(h2ScoreCol);
+  h2ScoreCol.appendChild(h2ScoreTitle);
+
+  for (i = 1; i < oldNames.length; i++) {
+    
+  }
 
 }
 
