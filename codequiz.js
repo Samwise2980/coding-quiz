@@ -20,6 +20,15 @@ var questions = [
   }
 ];
 
+var totalScore = totalCorrect * 27;
+
+var 
+
+function getInitials() {
+  localStorage.getItem("nameInitial")
+
+}
+
 function removeAllChildren() {
   document.getElementById("main").innerHTML = "";
 }
@@ -101,20 +110,34 @@ function welcomeInputField() {
   var inputContainer = document.createElement("div");
   var divRow2 = document.createElement("div");
   var divCol2 = document.createElement("div");
+  var divRow3 = document.createElement("div");
+  var divCol3 = document.createElement("div");
+  var formSubmitButton = document.createElement("button");
+
+
   var form1 = document.createElement("form");
   var p1 = document.createElement("p");
   var inputLabel = document.createElement("label");
   var input1 = document.createElement("input");
 
+
   mainContainer.appendChild(divRow2);
   divRow2.appendChild(divCol2);
   divCol2.appendChild(p1);
+
 
   mainContainer.appendChild(inputContainer);
   inputContainer.appendChild(form1);
   form1.appendChild(inputLabel);
   form1.appendChild(input1);
+  mainContainer.appendChild(divRow3);
+  divRow3.appendChild(divCol3);
+  divCol3.appendChild(formSubmitButton);
 
+  formSubmitButton.textContent = "Submit"
+
+  formSubmitButton.setAttribute("id", "submit-form-button");
+  formSubmitButton.setAttribute("class", "btn btn-primary mt-3");
   inputContainer.setAttribute("class", "container text-center mt-3");
   inputContainer.setAttribute("style", "width = 500px;")
   inputContainer.setAttribute("style", "height = 500px;")
@@ -139,7 +162,7 @@ function nameFormForm() {
   var nameInput = document.querySelector("#name-input");
   var nameForm = document.querySelector("#name-form");
 
-  nameForm.addEventListener("submit", function(event) {
+  document.getElementById("submit-form-button").addEventListener("click", function(event) {
     // event.preventDefault();
     var nameText = nameInput.value;
     
@@ -150,7 +173,7 @@ function nameFormForm() {
     nameInput.value = "";
     
     localStorage.setItem("personalName", nameText);
-
+    location.reload();
   });
 }
   
@@ -245,10 +268,7 @@ function question3(){
 }
 
 function questionChecker1() {  
-  var radio1 = document.getElementById("answerRadio1");
   var radio2 = document.getElementById("answerRadio2");
-  var radio3 = document.getElementById("answerRadio3");
-  var radio4 = document.getElementById("answerRadio4");
   var subButton = document.getElementById("submit-button");
   
   subButton.addEventListener("click", function(event) {
@@ -268,9 +288,6 @@ function questionChecker1() {
 
 function questionChecker2() {  
   var radio1 = document.getElementById("answerRadio1");
-  var radio2 = document.getElementById("answerRadio2");
-  var radio3 = document.getElementById("answerRadio3");
-  var radio4 = document.getElementById("answerRadio4");
   var subButton = document.getElementById("submit-button");
     
   subButton.addEventListener("click", function(event) {
@@ -289,9 +306,6 @@ function questionChecker2() {
 }
 
 function questionChecker3() {  
-  var radio1 = document.getElementById("answerRadio1");
-  var radio2 = document.getElementById("answerRadio2");
-  var radio3 = document.getElementById("answerRadio3");
   var radio4 = document.getElementById("answerRadio4");
   var subButton = document.getElementById("submit-button");
       
@@ -311,7 +325,70 @@ function questionChecker3() {
 }
   
 // Score screen to store the initials.
-function gameOver() {   
+function gameOver() {
+  // Pop with a input field to store persons name or initials
+  var gameOverContainer = document.createElement("div");
+  var gameOverRow = document.createElement("div");
+  var gameOverCol = document.createElement("div");
+  var gameOverButtonRow = document.createElement("div");
+  var gameOverButtonCol = document.createElement("div");
+  var gameOverLabel = document.createElement("label");
+  var gameOVerInput = document.createElement("input");
+  var gameOverP = document.createElement("p");
+  var gameOverSubmitButton = document.createElement("button");
+
+  // Submit button that takes away the popup screen
+  gameOverContainer.setAttribute("class", "container");
+  gameOverRow.setAttribute("class", "row");
+  gameOverP.setAttribute("class", "mr-3");
+  gameOverCol.setAttribute("class", "col-md");
+  gameOverButtonRow.setAttribute("class", "row");
+  gameOverButtonCol.setAttribute("class", "col-md");
+  gameOverLabel.setAttribute("for", "gameOver-name-input");
+  gameOVerInput.setAttribute("class", "form-control");
+  gameOVerInput.setAttribute("type", "text");
+  gameOVerInput.setAttribute("id", "gameOver-name-input");
+  gameOVerInput.setAttribute("name", "gameOver-name-input");
+  gameOVerInput.setAttribute("placeholder", "ABC");
+  gameOverSubmitButton.setAttribute("class", "btn btn-primary mt-3");
+  gameOverSubmitButton.setAttribute("id", "game-over-button");
+
+  gameOverP.textContent = "Please enter your initials to appear on the score page.";
+  gameOverLabel.textContent = "Initials";
+  gameOverSubmitButton.textContent = "Submit";
+
+  mainContainer.appendChild(gameOverContainer);
+  gameOverContainer.appendChild(gameOverRow);
+  gameOverRow.appendChild(gameOverCol);
+  gameOverContainer.appendChild(gameOverButtonRow);
+  gameOverButtonRow.appendChild(gameOverButtonCol);
+  gameOverCol.appendChild(gameOverP);
+  gameOverCol.appendChild(gameOverLabel);
+  gameOverCol.appendChild(gameOVerInput);
+  gameOverButtonCol.appendChild(gameOverSubmitButton)
+
+  var nameInput = document.querySelector("#gameOver-name-input");
+
+  document.getElementById("game-over-button").addEventListener("click", function(event) {
+    // event.preventDefault();
+    var nameText = nameInput.value;
+    var InitialInput = [localStorage.getItem("nameInitial")];
+    var newInitialInput = InitialInput.push(nameText);
+    if (nameText === "") {
+      return;
+    }
+    alert("Im herer");
+    nameInput.value = "";
+    
+    localStorage.setItem("nameInitial", newInitialInput);
+    removeAllChildren();
+    scoreScreen();
+  });
+}
+
+function scoreScreen() {
+
+
 
 }
 
