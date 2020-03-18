@@ -4,19 +4,19 @@ var secondsLeft = 60;
 
 var totalCorrect = 0;
 var totalWrong = 0;
-
+var testEnd = false;
 var questions = [
   {
-  question: "What is (2 + 3)?",
-  answer: [10, 5, 3, 7]
+  question: "In order to create a string, we need to put the text inside what?",
+  answer: ["/ symbols", "Quotation marks", "<string> </string> tag", "{} Symbols"]
   },
   {
-  question: "What is (5 + 5)?",
-  answer: [10, 11, 13, 9]
+  question: "Which keyword is used to tell JavaScript that we're going to work with a variable?",
+  answer: ["var", "int", "variable", "vrb"]
   },
   {
-  question: "What is (1 + 1)?",
-  answer: [0, 3, 1, 2] 
+  question: "Logical AND (&&) returns true if:",
+  answer: ["If both operands are not true", "If one of the operands is true, but not both", "If only one of the operands is true", "Both operands are true"] 
   }
 ];
 
@@ -40,6 +40,7 @@ function removeAllChildren() {
 function endQuiz() {
   document.getElementById("main").innerHTML = "";
   timerDown.innerHTML = "";
+  testEnd = true;
   clearInterval();
   gameOver();
 
@@ -102,7 +103,7 @@ function welcomeFriend() {
   quizButton.setAttribute("id", "quiz-button");
   quizButton.setAttribute("class", "btn btn-primary");
   
-  p1.textContent = "Welcome " + personalName + "! Let's get started on this quiz. You'll have 60 seconds to try to answer 5 questions about Javascript";
+  p1.textContent = "Welcome " + personalName + "! Let's get started on this quiz. You'll have 60 seconds to try to answer 3 questions about Javascript";
   quizButton.textContent = "Start Quiz"
 
   document.getElementById("quiz-button").addEventListener("click", function() {
@@ -225,6 +226,8 @@ function countDown() {
   }, 1000)
 }
 
+var secondsLeft = 60;
+
 function questionTimer() {
 
   var questionTimerContainer = document.createElement("div");
@@ -241,27 +244,28 @@ function questionTimer() {
   questionTimeCol.setAttribute("class", "col-md text-center");
   questionTime.setAttribute("style", "font-size: 30px");
  
-  var secondsLeft = 60;
-    
+  secondsLeft = 60;
   var setTimer = setInterval(function() {
       
     secondsLeft--;
       
     questionTime.textContent = secondsLeft;
-
+  
     // if (totalWrong === ) {
     //   secondsLeft - 10;
     // }
-
-    if (secondsLeft === 0) {
+  
+    if (secondsLeft === 0 || testEnd === true) {
       clearInterval(setTimer);
       removeAllChildren();
       timerDown.innerHTML = "";
       gameOver();
-
+  
     }
   }, 1000)
 }
+
+
 
 function question1(){
 
@@ -295,6 +299,7 @@ function questionChecker1() {
       question2();
     } else {
       totalWrong++;
+      secondsLeft -= 10;
       removeAllChildren();
       question2();
 
@@ -314,6 +319,7 @@ function questionChecker2() {
       question3();
     } else {
       totalWrong++;
+      secondsLeft -= 10;
       removeAllChildren();
       question3();
 
@@ -334,6 +340,7 @@ function questionChecker3() {
     
     } else {
       totalWrong++;
+      secondsLeft -= 10;
       removeAllChildren();
       endQuiz();
     }
