@@ -5,6 +5,14 @@ var secondsLeft = 60;
 var totalCorrect = 0;
 var totalWrong = 0;
 var testEnd = false;
+
+
+var retrievedScoreData = localStorage.getItem("gameScore");
+var retrievedNameData = localStorage.getItem("nameInitial");
+
+var oldScores = JSON.parse(retrievedScoreData) || [];
+var oldNames = JSON.parse(retrievedNameData) || [];
+
 var questions = [
   {
   question: "In order to create a string, we need to put the text inside what?",
@@ -19,14 +27,6 @@ var questions = [
   answer: ["If both operands are not true", "If one of the operands is true, but not both", "If only one of the operands is true", "Both operands are true"] 
   }
 ];
-
-var retrievedScoreData = localStorage.getItem("gameScore");
-var retrievedNameData = localStorage.getItem("nameInitial");
-
-var oldScores = JSON.parse(retrievedScoreData);
-var oldNames = JSON.parse(retrievedNameData);
-
-
 
 function getInitials() {
   localStorage.getItem("nameInitial")
@@ -391,9 +391,7 @@ function gameOver() {
   gameOverButtonCol.appendChild(gameOverSubmitButton)
 
   var nameInput = document.querySelector("#gameOver-name-input");
-
-  document.getElementById("game-over-button").addEventListener("click", function(event) {
-    // event.preventDefault();
+  function saveScore(){
     var nameText = nameInput.value;
     if (nameText === "") {
       return;
@@ -404,12 +402,26 @@ function gameOver() {
     oldScores.push(totalScore);
     localStorage.setItem("nameInitial", JSON.stringify(oldNames));
     localStorage.setItem("gameScore", JSON.stringify(oldScores));
-
+  
     removeAllChildren();
-
+  
     scoreScreen();
+  }
+
+  document.getElementById("game-over-button").addEventListener("click", function(event) {
+    event.preventDefault();
+    saveScore();
+  });
+
+  document.getElementById("gameOver-name-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter"){
+      event.preventDefault();
+      saveScore();  
+    }
   });
 }
+
+
 
 function scoreScreen() {
   var scoreContainer = document.createElement("div");
